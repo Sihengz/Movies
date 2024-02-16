@@ -100,6 +100,8 @@ public class MovieCollection {
         return cast;
     }
 
+
+
     private static ArrayList<String> removeDuplicates(ArrayList<String> list)
     {
         ArrayList<String> newList = new ArrayList<String>();
@@ -144,15 +146,15 @@ public class MovieCollection {
 
             } else if (menuOption.equals("c")) {
                 System.out.println("What person would you like to learn about? ");
-                String x = scanner.nextLine().toLowerCase();
-                ArrayList<Movie> matches = searchCastMovie(x);
-                ArrayList<String> cast = searchCast(matches, x);
+                String castMember = scanner.nextLine().toLowerCase();
+                ArrayList<Movie> matches = searchCastMovie(castMember);
+                ArrayList<String> cast = searchCast(matches, castMember);
                 cast = removeDuplicates(cast);
                 for (int i = 0; i < cast.size(); i++) {
                     System.out.println((i + 1) + ". " + cast.get(i));
                 }
                 System.out.println("Whose movies would you like to see?");
-                //TODO
+                int x = scanner.nextInt();
 
             } else if (menuOption.equals("q")) {
                 System.out.println("Goodbye!");
