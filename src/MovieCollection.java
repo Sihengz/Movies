@@ -147,10 +147,13 @@ public class MovieCollection {
                 String x = scanner.nextLine().toLowerCase();
                 ArrayList<Movie> matches = searchCastMovie(x);
                 ArrayList<String> cast = searchCast(matches, x);
-                cast =removeDuplicates(cast);
+                cast = removeDuplicates(cast);
                 for (int i = 0; i < cast.size(); i++) {
                     System.out.println((i + 1) + ". " + cast.get(i));
                 }
+                System.out.println("Whose movies would you like to see?");
+                //TODO
+
             } else if (menuOption.equals("q")) {
                 System.out.println("Goodbye!");
             } else {
