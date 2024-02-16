@@ -154,7 +154,7 @@ public class MovieCollection {
                     System.out.println((i + 1) + ". " + cast.get(i));
                 }
                 System.out.println("Whose movies would you like to see?");
-                int x = scanner.nextInt();
+                int x = scanner.nextInt(); // :)
 
             } else if (menuOption.equals("q")) {
                 System.out.println("Goodbye!");
