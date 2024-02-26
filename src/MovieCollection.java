@@ -113,6 +113,21 @@ public class MovieCollection {
         return newList;
     }
 
+    public static void selectionSortWordList(ArrayList<String> words) {
+        int n = words.size();
+        for (int i = 0; i < n - 1; i++) {
+            int min_idx = i;
+            for (int j = i + 1; j < n; j++) {
+                if (words.get(j).compareTo(words.get(min_idx)) < 0) {
+                    min_idx = j;
+                }
+            }
+            String temp = words.get(i);
+            words.set(i, words.get(min_idx));
+            words.set(min_idx, temp);
+        }
+    }
+
 
 
 
@@ -156,6 +171,7 @@ public class MovieCollection {
                 ArrayList<Movie> matches = searchForCast(castMember);
                 ArrayList<String> cast = searchCast(matches, castMember);
                 cast = removeDuplicates(cast);
+                selectionSortWordList(cast);
                 for (int i = 0; i < cast.size(); i++) {
                     System.out.println((i + 1) + ". " + cast.get(i));
                 }
@@ -164,6 +180,8 @@ public class MovieCollection {
                     menu();
                     return;
                 }
+
+
 
                 System.out.println("Whose movies would you like to see? (number)");
                 int x = scanner.nextInt();
