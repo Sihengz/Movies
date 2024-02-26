@@ -68,19 +68,19 @@ public class MovieCollection {
         return matches;
     }
 
-    private ArrayList<Movie> searchCastMovie(String searchTerm) {
-        ArrayList<Movie> cast = new ArrayList<>();
+    private ArrayList<Movie> searchForCast(String searchTerm) {
+        ArrayList<Movie> withCast = new ArrayList<>();
         for (Movie movie : movies) {
             String[] parsedData = movie.getCast().split("\\|");
             for (int i = 0; i < parsedData.length; i++) {
-                if (parsedData[i].toLowerCase().contains(searchTerm)) {
-                    cast.add(movie);
+                if (parsedData[i].toLowerCase().contains(searchTerm.toLowerCase())) {
+                    withCast.add(movie);
                 }
             }
         }
 
-        sortMovieList(cast);
-        return cast;
+        sortMovieList(withCast);
+        return withCast;
     }
 
     private ArrayList<String> searchCast(ArrayList<Movie> validMovies, String searchTerm) {
@@ -88,7 +88,7 @@ public class MovieCollection {
         for (Movie movie : validMovies) {
             String[] parsedData = movie.getCast().split("\\|");
             for (int i = 0; i < parsedData.length; i++) {
-                if (parsedData[i].toLowerCase().contains(searchTerm)) {
+                if (parsedData[i].toLowerCase().contains(searchTerm.toLowerCase())) {
                     cast.add(parsedData[i]);
                 }
             }
@@ -134,6 +134,12 @@ public class MovieCollection {
                 for (int i = 0; i < matches.size(); i++) {
                     System.out.println((i + 1) + ". " + matches.get(i).getTitle());
                 }
+
+                if (matches.size() == 0) {
+                    menu();
+                    return;
+                }
+
                 System.out.println("Which movie would you like to learn about? ");
                 int x = scanner.nextInt();
                 scanner.nextLine();
@@ -147,14 +153,37 @@ public class MovieCollection {
             } else if (menuOption.equals("c")) {
                 System.out.println("What person would you like to learn about? ");
                 String castMember = scanner.nextLine().toLowerCase();
-                ArrayList<Movie> matches = searchCastMovie(castMember);
+                ArrayList<Movie> matches = searchForCast(castMember);
                 ArrayList<String> cast = searchCast(matches, castMember);
                 cast = removeDuplicates(cast);
                 for (int i = 0; i < cast.size(); i++) {
                     System.out.println((i + 1) + ". " + cast.get(i));
                 }
-                System.out.println("Whose movies would you like to see?");
-                int x = scanner.nextInt(); // :)
+
+                if (cast.size() == 0) {
+                    menu();
+                    return;
+                }
+
+                System.out.println("Whose movies would you like to see? (number)");
+                int x = scanner.nextInt();
+
+                ArrayList<Movie> matchingMovies = searchForCast(cast.get(x - 1));
+                for (int i = 0; i < matchingMovies.size(); i++) {
+                    System.out.println((i + 1) + ". " + matchingMovies.get(i).getTitle());
+                }
+
+
+                System.out.println("Which movie would you like to learn about? ");
+                x = scanner.nextInt();
+                scanner.nextLine();
+                System.out.println("Title: " + matchingMovies.get(x - 1).getTitle());
+                System.out.println("Runtime: " + matchingMovies.get(x - 1).getRuntime() + " minutes");
+                System.out.println("Directed by: " + matchingMovies.get(x - 1).getDirector());
+                System.out.println("Cast: " + matchingMovies.get(x - 1).getCast());
+                System.out.println("Overview " + matchingMovies.get(x - 1).getOverview());
+                System.out.println("User Rating: " + matchingMovies.get(x - 1).getUserRating());
+
 
             } else if (menuOption.equals("q")) {
                 System.out.println("Goodbye!");
